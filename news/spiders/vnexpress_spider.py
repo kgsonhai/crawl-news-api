@@ -14,13 +14,13 @@ class VnexpressSpider(BaseSpider):
     def start_requests(self):
         urls_dict = {
             "https://vnexpress.net/thoi-su/chinh-tri": "chinh-tri",
-            "https://vnexpress.net/doi-song": "xa-hoi",
-            "https://vnexpress.net/kinh-doanh": "kinh-te",
-            "https://vnexpress.net/giao-duc": "giao-duc",
-            "https://vnexpress.net/khoa-hoc/tin-tuc": "khoa-hoc",
-            "https://vnexpress.net/suc-khoe/tin-tuc": "y-te",
-            "https://vnexpress.net/the-thao": "the-thao",
-            "https://vnexpress.net/giai-tri": "giai-tri"
+            # "https://vnexpress.net/doi-song": "xa-hoi",
+            # "https://vnexpress.net/kinh-doanh": "kinh-te",
+            # "https://vnexpress.net/giao-duc": "giao-duc",
+            # "https://vnexpress.net/khoa-hoc/tin-tuc": "khoa-hoc",
+            # "https://vnexpress.net/suc-khoe/tin-tuc": "y-te",
+            # "https://vnexpress.net/the-thao": "the-thao",
+            # "https://vnexpress.net/giai-tri": "giai-tri"
         }
         for url in urls_dict:
             yield scrapy.Request(url=url, callback=self.parse_article_url_list, meta={"category_url": url,

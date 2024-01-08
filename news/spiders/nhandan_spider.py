@@ -14,13 +14,13 @@ class NhanDanSpider(BaseSpider):
     def start_requests(self):
         urls_dict = {
             "https://nhandan.vn/chinhtri/": "chinh-tri",
-            "https://nhandan.vn/xahoi/": "xa-hoi",
-            "https://nhandan.vn/vanhoa/": "van-hoa",
-            "https://nhandan.vn/kinhte/": "kinh-te",
-            "https://nhandan.vn/giaoduc/": "giao-duc",
-            "https://nhandan.vn/khoahoc-congnghe/": "khoa-hoc",
-            "https://nhandan.vn/y-te/": "y-te",
-            "https://nhandan.vn/thethao/": "the-thao",
+            # "https://nhandan.vn/xahoi/": "xa-hoi",
+            # "https://nhandan.vn/vanhoa/": "van-hoa",
+            # "https://nhandan.vn/kinhte/": "kinh-te",
+            # "https://nhandan.vn/giaoduc/": "giao-duc",
+            # "https://nhandan.vn/khoahoc-congnghe/": "khoa-hoc",
+            # "https://nhandan.vn/y-te/": "y-te",
+            # "https://nhandan.vn/thethao/": "the-thao",
         }
         for url in urls_dict:
             yield scrapy.Request(url=url, callback=self.parse_article_url_list, meta={"category_url": url,

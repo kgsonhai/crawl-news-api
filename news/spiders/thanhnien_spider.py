@@ -15,14 +15,14 @@ class ThanhNienSpider(BaseSpider):
     def start_requests(self):
         urls_dict = {
             "https://thanhnien.vn/thoi-su/chinh-tri.htm": "chinh-tri",
-            "https://thanhnien.vn/doi-song.htm": "xa-hoi",
-            "https://thanhnien.vn/van-hoa.htm": "van-hoa",
-            "https://thanhnien.vn/kinh-te.htm": "kinh-te",
-            "https://thanhnien.vn/giao-duc.htm": "giao-duc",
-            "https://thanhnien.vn/suc-khoe.htm": "y-te",
-            "https://thanhnien.vn/cong-nghe-game.htm": "cong-nghe",
-            "https://thanhnien.vn/the-thao.htm": "the-thao",
-            "https://thanhnien.vn/giai-tri.html": "giai-tri"
+            # "https://thanhnien.vn/doi-song.htm": "xa-hoi",
+            # "https://thanhnien.vn/van-hoa.htm": "van-hoa",
+            # "https://thanhnien.vn/kinh-te.htm": "kinh-te",
+            # "https://thanhnien.vn/giao-duc.htm": "giao-duc",
+            # "https://thanhnien.vn/suc-khoe.htm": "y-te",
+            # "https://thanhnien.vn/cong-nghe-game.htm": "cong-nghe",
+            # "https://thanhnien.vn/the-thao.htm": "the-thao",
+            # "https://thanhnien.vn/giai-tri.html": "giai-tri"
         }
         for url in urls_dict:
             yield scrapy.Request(url=url, callback=self.parse_article_url_list, meta={"category_url": url,

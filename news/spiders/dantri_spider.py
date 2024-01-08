@@ -16,14 +16,14 @@ class DanTriSpider(BaseSpider):
     def start_requests(self):
         urls_dict = {
             "https://dantri.com.vn/xa-hoi/chinh-tri.htm": "chinh-tri",
-            "https://dantri.com.vn/xa-hoi.htm": "xa-hoi",
-            "https://dantri.com.vn/van-hoa.htm": "van-hoa",
-            "https://dantri.com.vn/kinh-doanh.htm": "kinh-te",
-            "https://dantri.com.vn/giao-duc-huong-nghiep.htm": "giao-duc",
-            "https://dantri.com.vn/suc-khoe.htm": "y-te",
-            "https://dantri.com.vn/suc-manh-so.htm": "cong-nghe",
-            "https://dantri.com.vn/the-thao.htm": "the-thao",
-            "https://dantri.com.vn/giai-tri.htm": "giai-tri"
+            # "https://dantri.com.vn/xa-hoi.htm": "xa-hoi",
+            # "https://dantri.com.vn/van-hoa.htm": "van-hoa",
+            # "https://dantri.com.vn/kinh-doanh.htm": "kinh-te",
+            # "https://dantri.com.vn/giao-duc-huong-nghiep.htm": "giao-duc",
+            # "https://dantri.com.vn/suc-khoe.htm": "y-te",
+            # "https://dantri.com.vn/suc-manh-so.htm": "cong-nghe",
+            # "https://dantri.com.vn/the-thao.htm": "the-thao",
+            # "https://dantri.com.vn/giai-tri.htm": "giai-tri"
         }
         for url in urls_dict:
             yield scrapy.Request(url=url, callback=self.parse_article_url_list, meta={"category_url": url,

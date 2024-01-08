@@ -14,13 +14,13 @@ class VietnamnetSpider(BaseSpider):
     def start_requests(self):
         urls_dict = {
             "https://vietnamnet.vn/thoi-su/chinh-tri": "chinh-tri",
-            "https://vietnamnet.vn/thoi-su": "xa-hoi",
-            "https://vietnamnet.vn/kinh-doanh": "kinh-te",
-            "https://vietnamnet.vn/giao-duc": "giao-duc",
-            "https://vietnamnet.vn/suc-khoe/": "y-te",
-            "https://vietnamnet.vn/thong-tin-truyen-thong/cong-nghe": "cong-nghe",
-            "https://vietnamnet.vn/the-thao": "the-thao",
-            "https://vietnamnet.vn/giai-tri": "giai-tri"
+            # "https://vietnamnet.vn/thoi-su": "xa-hoi",
+            # "https://vietnamnet.vn/kinh-doanh": "kinh-te",
+            # "https://vietnamnet.vn/giao-duc": "giao-duc",
+            # "https://vietnamnet.vn/suc-khoe/": "y-te",
+            # "https://vietnamnet.vn/thong-tin-truyen-thong/cong-nghe": "cong-nghe",
+            # "https://vietnamnet.vn/the-thao": "the-thao",
+            # "https://vietnamnet.vn/giai-tri": "giai-tri"
         }
         for url in urls_dict:
             yield scrapy.Request(url=url, callback=self.parse_article_url_list, meta={"category_url": url,

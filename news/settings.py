@@ -20,7 +20,7 @@ ROBOTSTXT_OBEY = True
 
 MONGO_URI = 'mongodb://localhost:27017'
 MONGO_DATABASE = 'scraper-news'
-MONGO_COLLECTION = 'articles'
+MONGO_COLLECTION = 'articles_baomoi'
 
 ITEM_PIPELINES = {
     'news.pipelines.MongoDB': 300,

@@ -1,6 +1,4 @@
 import uuid
-from abc import ABC
-from urllib.parse import urljoin
 
 import scrapy
 from scrapy.http.response import Response
@@ -9,43 +7,40 @@ from .base import BaseSpider, parse_datetime, check_valid_text
 from ..data.mongo import MongoDB
 
 
-class DanTriSpider(BaseSpider):
-    name = 'dantri'
+class NhanDanSpider(BaseSpider):
+    name = 'nhandan'
     mongo = MongoDB()
 
     def start_requests(self):
         urls_dict = {
-            "https://dantri.com.vn/xa-hoi/chinh-tri.htm": "chinh-tri",
-            "https://dantri.com.vn/xa-hoi.htm": "xa-hoi",
-            "https://dantri.com.vn/van-hoa.htm": "van-hoa",
-            "https://dantri.com.vn/kinh-doanh.htm": "kinh-te",
-            "https://dantri.com.vn/giao-duc-huong-nghiep.htm": "giao-duc",
-            "https://dantri.com.vn/suc-khoe.htm": "y-te",
-            "https://dantri.com.vn/suc-manh-so.htm": "cong-nghe",
-            "https://dantri.com.vn/the-thao.htm": "the-thao",
-            "https://dantri.com.vn/giai-tri.htm": "giai-tri"
+            "https://baomoi.com/thoi-su.epi/": "chinh-tri",
+            "https://baomoi.com/van-hoa.epi/": "van-hoa",
+            "https://baomoi.com/khoa-hoc.epi": "khoa-hoc",
+            "https://baomoi.com/giai-tri.epi": "giai-tri",
         }
         for url in urls_dict:
             yield scrapy.Request(url=url, callback=self.parse_article_url_list, meta={"category_url": url,
                                                                                       "category": urls_dict[url]})
 
     def parse_article_url_list(self, response):
-        url_pattern = r'\/[\w-]+\/[-\w]+-\d{17}\.htm'
-        urls =  response.css('html').re(url_pattern)
+        url_pattern = r'[-\w]+-c\d+\.epi'
+        urls = response.css('html').re(url_pattern)
+        if urls:
+            urls = ["https://baomoi.com/" + url for url in urls]
         urls = list(set(urls))
 
         for url in urls:
             if self.mongo.get_articles_by_url(url) is None:
-                url = "https://dantri.com.vn" + url
                 meta = response.meta
                 meta['url'] = url
                 yield scrapy.Request(url=url, callback=self.parse_content_article,
                                      meta=meta)
 
     def parse_content_article(self, response: Response):
-        image_urls = response.xpath("//div[contains(@class, 'singular-content')]//img/@data-src").get()
+        image_urls = response.xpath("//table[contains(@class, 'picture')]//img/@src").get()
         title = response.css('h1::text').get()
-        content = " ".join(response.css('h2.singular-sapo::text, div.singular-content p::text').getall())
+        content = " ".join(response.css('body .bm_RL p::text').getall())
+
         if check_valid_text(title) is False or check_valid_text(content) is False:
             yield {}
         else:
@@ -56,7 +51,7 @@ class DanTriSpider(BaseSpider):
                 'title': title.strip(),
                 'category_url': response.meta['category_url'],
                 'category': response.meta['category'],
-                'time': parse_datetime(response.css('.author-time::text').get()),
+                'time': parse_datetime(response.css('.article__meta .time::text').get()),
                 'content': content.strip(),
                 'img_urls': image_urls
             }
